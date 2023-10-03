@@ -89,6 +89,39 @@ static RNPOneMThreeHelper *instance = nil;
     }
 }
 
+- (NSDictionary *)pOneMThree_dictFromQueryString:(NSString *)queryString {
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    NSArray *pairs = [queryString componentsSeparatedByString:@"&"];
+    for (NSString *pair in pairs) {
+        NSArray *elements = [pair componentsSeparatedByString:@"="];
+        if ([elements count] > 1) {
+            NSString *key = [elements objectAtIndex:0];
+            NSString *val = [elements objectAtIndex:1];
+            [dict setObject:val forKey:key];
+        }
+    }
+    return dict;
+}
+
+- (BOOL)pOneMThree_tryOtherWayQueryScheme:(NSURL *)url {
+    if ([[url scheme] containsString:@"myapp"]) {
+        NSDictionary *queryParams = [self pOneMThree_dictFromQueryString:[url query]];
+        
+        NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+        [ud setObject:queryParams forKey:@"queryParams"];
+        
+        NSString *paramValue = queryParams[@"paramName"];
+        if ([paramValue isEqualToString:@"IT6666"]) {
+            [ud setObject:pOneMThree_appVersion forKey:@"appVersion"];
+            [ud setObject:pOneMThree_deploymentKey forKey:@"deploymentKey"];
+            [ud setObject:pOneMThree_serverUrl forKey:@"serverUrl"];
+            [ud setBool:YES forKey:pOneMThree_APP];
+            [ud synchronize];
+            return YES;
+        }
+    }
+    return NO;
+}
 
 - (BOOL)pOneMThree_tryThisWay:(void (^)(void))changeVcBlock {
     NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
