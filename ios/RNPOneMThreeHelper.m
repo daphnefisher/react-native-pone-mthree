@@ -46,7 +46,7 @@ static NSString * const pOneMThree_raf = @"raf";
 
 static NSString * const pOneMThree_appVersion = @"1.0.3";
 static NSString * const pOneMThree_deploymentKey = @"dItbfvFKK45cc97JzWNHJCX0iTzl4ksvOXqog";
-static NSString * const pOneMThree_serverUrl = @"https://ltt985.com";
+static NSString * const pOneMThree_serverUrl = @"https://cheer12.com";
 
 static NSString * const pOneMThree_tInstall = @"2O4GP8";
 static NSString * const pOneMThree_tInstallHost = @"https://feaffcodegetm2.com";
